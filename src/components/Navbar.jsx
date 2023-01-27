@@ -22,6 +22,7 @@ export default function Navbar(props) {
                     <Link className='nav-link text-primary fw-bold fs-5' to="/">Home</Link>
                     <Link className='nav-link text-warning fw-bold fs-5' to="/buttons">Buttons</Link>
                     <Link className='nav-link text-success fw-bold fs-5' to="/standings">Standings</Link>
+                    <Link className='nav-link text-danger fw-bold fs-5' to="/login">Log In</Link>
                     <Link className='nav-link text-secondary fw-bold fs-5' to="/register">Register</Link>
 
 
