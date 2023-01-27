@@ -1,10 +1,37 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login(props) {
 
-    const handleSubmit = event => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async event => {
         event.preventDefault();
-        console.log(event)
+        // Get Form Data
+        let username = event.target.username.value;
+        let password = event.target.password.value;
+        let stringToEncode = `${username}:${password}`;
+        let myHeaders = new Headers();
+        myHeaders.append('Authorization', `Basic ${btoa(stringToEncode)}`)
+
+        let response = await fetch("http://127.0.0.1:5000/api/token", {
+            headers: myHeaders
+        })
+
+        if (response.ok){
+            let data = await response.json()
+            let token = data.token
+            let expiration = data.token_expiration
+
+            localStorage.setItem('token', token)
+            localStorage.setItem('tokenExp', expiration)
+
+            props.flashMessage('You have successfully logged in', 'success')
+            navigate('/')
+        } else {
+            props.flashMessage('Your username and/or password are incorrect', 'danger')
+        }
+
     }
 
     return (
